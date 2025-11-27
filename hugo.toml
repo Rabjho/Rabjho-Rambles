@@ -1,4 +1,4 @@
-baseURL = 'https://0065537.xyz/'
+baseURL = '/'
 languageCode = 'en-us'
 title = 'Rabjho Rambles'
 theme = "PaperMod"
@@ -43,8 +43,9 @@ buildExpired = false
   url = "https://www.linkedin.com/in/rabjho/"
 
 [taxonomies]
-  name = "ctf"
-  weight = 10
+  tag = "tags"
+  category = "categories"
+  ctf = "ctfs"
 
 [menu]
   [[menu.main]]
