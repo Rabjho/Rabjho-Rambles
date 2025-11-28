@@ -1,6 +1,7 @@
 +++
 date = '2025-11-10T09:38:59+01:00'
 draft = false
+slug = 'befuddled-befucked'
 title = 'Befuddled / Befucked'
 author = ["Sibech", "Rabjho"]
 categories = ["rev", "unintended"]
