@@ -1,7 +1,7 @@
 +++
 date = '2025-11-10T09:38:59+01:00'
 draft = false
-title = 'Befuddled + Befucked'
+title = 'Befuddled / Befucked'
 author = ["Sibech", "Rabjho"]
 categories = ["rev", "unintended"]
 tags = ["BuckeyeCTF2026"]
@@ -55,7 +55,7 @@ We discovered, that when we gave an even byte we were sent straight to `NOPE!!!!
 
 So we try a filler byte and try the next character. We're back babyyyy, our oracle is working again. Don't know why, don't care why.
 
-![GDB Gambling](gdbgambling.gif)
+![GDB Gambling](/img/gdbgambling.gif)
 
 Soon after, already at `_unC0mp1labl3}` the oracle breaks again. Alright, let's put in a few more bytes until we get back to our breakpoints. Luv me breakpoints. We do this process until we have `bctf{XXmPIle_Th3_unC0mp1labl3}`, where the Xs are unknown. Enough GDB'ing back to guessing (_the best part of flag checker challs_) by running the binary to confirm the last two bytes until we hit `CORRECT!!!`.
 
@@ -186,7 +186,7 @@ Trying to solve the challenge the same as before was not good. We only get to `0
 
 Hmm okay let's just continue with placeholders until we get another `test` oracle. After two placeholders total we get our oracle back and can proceed to get two proper bytes of the flag, `wsXX}`. Now it is time for round two of GDB gambling.
 
-![GDB Gambling](gdbgambling.gif)
+![GDB Gambling](/img/gdbgambling.gif)
 
 ### Panic
 
@@ -494,7 +494,7 @@ Sorry to dissapoint you fisher792, we are in fact not the GDB gods that we led y
 
 ## TLDR
 
-![GDB Gambling](gdbgambling.gif)
+![GDB Gambling](/img/gdbgambling.gif)
 
 \+
 

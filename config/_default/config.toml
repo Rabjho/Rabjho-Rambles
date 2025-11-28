@@ -14,9 +14,3 @@ hasCJKLanguage = false
 
 [pagination]
 pagerSize = 15
-
-[[params.imageProcessing]]
-    [cover]
-        enabled = false
-    [content]
-        enabled = false
