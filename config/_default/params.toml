@@ -1,0 +1,71 @@
+# Pages placed under these sections will be shown on homepage and archive page.
+mainSections = ["post"]
+# Output page's full content in RSS.
+rssFullContent = true
+favicon = "/favicon.ico"
+
+[dateFormat]
+published = "Jan 02, 2006"
+lastUpdated = "Jan 02, 2006 15:04 MST"
+
+[sidebar]
+emoji = "🚴"
+subtitle = "Blog with writeups, rambles and more from a CTF addict playing with 0-Day Aarhus"
+
+[sidebar.avatar]
+enabled = true
+local = true
+src = "img/logo.png"
+
+[article]
+headingAnchor = false
+math = false
+readingTime = true
+
+## Widgets
+[[widgets.homepage]]
+type = "search"
+
+[[widgets.homepage]]
+type = "archives"
+
+[widgets.homepage.params]
+limit = 5
+
+[[widgets.homepage]]
+type = "categories"
+
+[widgets.homepage.params]
+limit = 10
+
+[[widgets.homepage]]
+type = "tag-cloud"
+
+[widgets.homepage.params]
+limit = 10
+
+[[widgets.page]]
+type = "toc"
+
+[opengraph.twitter]
+site = ""
+card = "summary_large_image"
+
+[defaultImage.opengraph]
+enabled = false
+local = false
+src = ""
+
+[colorScheme]
+toggle = true
+default = "auto"
+
+[imageProcessing.cover]
+enabled = true
+
+[imageProcessing.content]
+enabled = true
+
+## Comments
+[comments]
+enabled = false
