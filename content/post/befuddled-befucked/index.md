@@ -4,8 +4,8 @@ draft = false
 slug = 'befuddled-befucked'
 title = 'Befuddled / Befucked'
 author = ["Sibech", "Rabjho"]
-categories = ["rev", "unintended"]
-tags = ["BuckeyeCTF2026"]
+tags = ["rev", "unintended"]
+ctf = "BuckeyeCTF2026"
 image = "befucked-monkey.png"
 +++
 

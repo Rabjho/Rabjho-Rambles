@@ -44,6 +44,12 @@ type = "tag-cloud"
 [widgets.homepage.params]
 limit = 10
 
+[[widgets.homepage]]
+type = "ctfs"
+
+[widgets.homepage.params]
+limit = 10
+
 [[widgets.page]]
 type = "toc"
 

@@ -1,0 +1,25 @@
+{{- $context := .Context -}} {{- $limit := default 10 .Params.limit -}} {{- with
+$context.Site.Taxonomies.ctf -}} {{- $terms := .ByCount -}} {{- if gt (len
+$terms) 0 -}} {{- $taxonomyPage := $context.Site.GetPage "taxonomyTerm" "ctf"
+-}}
+<section class="widget tagCloud">
+  <div class="widget-header">
+    {{- $href := "#" -}}
+    {{- if $taxonomyPage -}}
+      {{- $href = $taxonomyPage.RelPermalink -}}
+    {{- end -}}
+    <a href="{{ $href }}" aria-label="View all CTF taxonomies" class="widget-link">
+      <span class="widget-icon">{{ partial "helper/icon" "hash" }}</span>
+      <span class="widget-title section-title">By CTF</span>
+    </a>
+  </div>
+
+  <div class="tagCloud-tags">
+    {{ range first $limit $terms }}
+    <a href="{{ .Page.RelPermalink }}" class="font_size_{{ .Count }}">
+      {{ .Page.Title }}
+    </a>
+    {{ end }}
+  </div>
+</section>
+{{- end -}} {{- end -}}

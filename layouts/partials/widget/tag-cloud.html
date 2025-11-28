@@ -1,0 +1,23 @@
+{{- $context := .Context -}} {{- $limit := default 10 .Params.limit -}} {{- with
+$context.Site.Taxonomies.tags -}} {{- $terms := .ByCount -}} {{- if gt (len
+$terms) 0 -}} {{- $taxonomyPage := $context.Site.GetPage "taxonomyTerm" "tags"
+-}}
+<section class="widget tagCloud">
+  <div class="widget-header">
+    {{- $href := "#" -}} {{- if $taxonomyPage -}} {{- $href =
+    $taxonomyPage.RelPermalink -}} {{- end -}}
+    <a href="{{ $href }}" aria-label="View all tags" class="widget-link">
+      <span class="widget-icon">{{ partial "helper/icon" "tag" }}</span>
+      <span class="widget-title section-title"
+        >{{ T "widget.tagCloud.title" }}</span
+      >
+    </a>
+  </div>
+
+  <div class="tagCloud-tags">
+    {{ range first $limit $terms }}
+    <a href="{{ .Page.RelPermalink }}"> {{ .Page.Title }} </a>
+    {{ end }}
+  </div>
+</section>
+{{- end -}} {{- end -}}
