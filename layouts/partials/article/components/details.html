@@ -1,87 +1,103 @@
+{{- $IsList := .IsList -}}
+{{- $Page := .Page -}}
 <div class="article-details">
-  {{ $tags := .GetTerms "tags" }}
-  {{ $ctf := .GetTerms "ctf" }}
-  {{ $rawAuthors := .Params.author }}
-  {{ $authors := slice }}
-  {{ $showAuthors := false }}
-  {{ with $rawAuthors }}
-    {{ if reflect.IsSlice . }}
-      {{ $authors = . }}
-    {{ else }}
-      {{ $authors = slice . }}
-    {{ end }}
-    {{ $showAuthors = gt (len $authors) 0 }}
-  {{ end }}
-  {{ if or $tags $ctf }}
-  <header class="article-category">
-    {{ with $tags }}
-      {{ range . }}
-      <a href="{{ .RelPermalink }}" class="article-tag-chip">
-        {{ .LinkTitle }}
-      </a>
-      {{ end }}
+    {{- $tags := $Page.GetTerms "tags" -}}
+    {{- $ctf := $Page.GetTerms "ctf" -}}
+    {{- $rawAuthors := $Page.Params.author -}}
+    {{- $authors := slice -}}
+    {{- $showAuthors := false -}}
+    {{- with $rawAuthors -}}
+        {{- if reflect.IsSlice . -}}
+            {{- $authors = . -}}
+        {{- else -}}
+            {{- $authors = slice . -}}
+        {{- end -}}
+        {{- $showAuthors = gt (len $authors) 0 -}}
+    {{- end -}}
+
+    {{ if or $tags $ctf }}
+    <header class="article-category">
+        {{ with $tags }}
+            {{ range . }}
+            {{ $color := partial "helper/color-from-str" .LinkTitle }}
+            {{ $BackgroundColor := default $color.BackgroundColor .Params.style.background }}
+            {{ $TextColor := default $color.TextColor .Params.style.color }}
+            <a href="{{ .RelPermalink }}" style="background-color: {{ $BackgroundColor | safeCSS }}; color: {{ $TextColor | safeCSS }};">
+                {{ .LinkTitle }}
+            </a>
+            {{ end }}
+        {{ end }}
+
+        {{ with $ctf }}
+            {{ range . }}
+            {{ $color := partial "helper/color-from-str" .LinkTitle }}
+            {{ $BackgroundColor := default $color.BackgroundColor .Params.style.background }}
+            {{ $TextColor := default $color.TextColor .Params.style.color }}
+            <a href="{{ .RelPermalink }}" style="background-color: {{ $BackgroundColor | safeCSS }}; color: {{ $TextColor | safeCSS }};">
+                {{ .LinkTitle }}
+            </a>
+            {{ end }}
+        {{ end }}
+    </header>
     {{ end }}
 
-    {{ with $ctf }}
-      {{ range . }}
-      <a href="{{ .RelPermalink }}" class="article-ctf-chip">
-        {{ .LinkTitle }}
-      </a>
-      {{ end }}
-    {{ end }}
-  </header>
-  {{ end }}
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="{{ $Page.RelPermalink }}">
+                {{- $Page.Title -}}
+            </a>
+        </h2>
 
-  <div class="article-title-wrapper">
-    <h2 class="article-title">
-      <a href="{{ .RelPermalink }}"> {{- .Title -}} </a>
-    </h2>
-
-    {{ with .Params.description }}
-    <h3 class="article-subtitle">{{ . }}</h3>
-    {{ end }}
-  </div>
-
-  {{ $showReadingTime := .Params.readingTime | default
-  (.Site.Params.article.readingTime) }} {{ $showDate := not .Date.IsZero }} {{
-  $showFooter := or (or $showDate $showReadingTime) $showAuthors }} {{ if $showFooter }}
-  <footer class="article-time">
-    {{ if $showAuthors }}
-    <div>
-      {{ partial "helper/icon" "user" }}
-      <span class="article-time--authors">
-        {{- delimit $authors ", " -}}
-      </span>
+        {{ with $Page.Params.description }}
+        <h3 class="article-subtitle">
+            {{ . }}
+        </h3>
+        {{ end }}
     </div>
-    {{ end }}
 
-    {{ if $showDate }}
-    <div>
-      {{ partial "helper/icon" "date" }}
-      <time
-        class="article-time--published"
-        datetime='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'
-      >
-        {{- .Date | time.Format (or .Site.Params.dateFormat.published "Jan 02, 2006") -}}
-      </time>
-    </div>
-    {{ end }} {{ if $showReadingTime }}
-    <div>
-      {{ partial "helper/icon" "clock" }}
-      <time class="article-time--reading">
-        {{ T "article.readingTime" .ReadingTime }}
-      </time>
-    </div>
+    {{ $showReadingTime := $Page.Params.readingTime | default ($Page.Site.Params.article.readingTime) }}
+    {{ $showDate := not $Page.Date.IsZero }}
+    {{ $showTime := or $showDate $showReadingTime }}
+    {{ $showTranslations := $Page.IsTranslated }}
+    {{ $showFooter := or (or $showTime $showAuthors) $showTranslations }}
+
+    {{ if $showFooter }}
+    <footer class="article-meta">
+        {{ if $showAuthors }}
+            <div class="inline-meta">
+                {{ partial "helper/icon" "user" }}
+                <span class="article-time--authors">
+                    {{- delimit $authors ", " -}}
+                </span>
+            </div>
+        {{ end }}
+
+        {{ if $showTime }}
+            <div class="inline-meta">
+                {{ if $showDate }}
+                    {{ partial "helper/icon" "date" }}
+                    <time class="article-time--published" datetime='{{ $Page.Date.Format "2006-01-02T15:04:05Z07:00" }}'>
+                        {{- $Page.Date | time.Format $Page.Site.Params.dateFormat.published -}}
+                    </time>
+                {{ end }}
+
+                {{ if $showReadingTime }}
+                    {{ partial "helper/icon" "clock" }}
+                    <time class="article-time--reading">
+                        {{ T "article.readingTime" $Page.ReadingTime }}
+                    </time>
+                {{ end }}
+            </div>
+        {{ end }}
+
+        {{ if $showTranslations }}
+            <div class="inline-meta">
+                {{ partial "helper/icon" "language" }}
+                {{ range $Page.Translations }}
+                    <a href="{{ .RelPermalink }}" class="link">{{ .Language.Label }}</a>
+                {{ end }}
+            </div>
+        {{ end }}
+    </footer>
     {{ end }}
-  </footer>
-  {{ end }} {{ if .IsTranslated }}
-  <footer class="article-translations">
-    {{ partial "helper/icon" "language" }}
-    <div>
-      {{ range .Translations }}
-      <a href="{{ .Permalink }}" class="link">{{ .Language.LanguageName }}</a>
-      {{ end }}
-    </div>
-  </footer>
-  {{ end }}
 </div>

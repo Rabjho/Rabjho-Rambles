@@ -1,0 +1,42 @@
+{{- $context := .Context -}}
+
+{{- if not .Params.taxonomy -}}
+    {{- warnf "Taxonomy field is required" -}}
+{{- end -}}
+
+{{- $taxonomy := index $context.Site.Taxonomies .Params.taxonomy -}}
+{{- if not $taxonomy -}}
+    {{- warnf "Taxonomy %s not found" .Params.taxonomy -}}
+{{- end -}}
+
+{{- $taxonomyPage := $taxonomy.Page -}}
+{{- $widgetTitle := .Params.title -}}
+{{- $limit := default 10 .Params.limit -}}
+{{- $icon := default .Params.taxonomy .Params.icon -}}
+{{- $showLink := default true .Params.showLink -}}
+
+<section class="widget tagCloud">
+    <div class="widget-icon">
+        {{ partial "helper/icon" $icon }}
+    </div>
+    <h2 class="widget-title section-title">
+        {{ if and $showLink $taxonomyPage }}
+            <a href="{{ $taxonomyPage.RelPermalink }}">
+                {{ $widgetTitle }}
+            </a>
+        {{ else }}
+            {{ $widgetTitle }}
+        {{ end }}
+    </h2>
+
+    <div class="tagCloud-tags">
+        {{ range first $limit $taxonomy.ByCount }}
+            {{ $color := partial "helper/color-from-str" .Page.Title }}
+            {{ $BackgroundColor := default $color.BackgroundColor .Page.Params.style.background }}
+            {{ $TextColor := default $color.TextColor .Page.Params.style.color }}
+            <a href="{{ .Page.RelPermalink }}" style="background-color: {{ $BackgroundColor | safeCSS }}; color: {{ $TextColor | safeCSS }};">
+                {{ .Page.Title }}
+            </a>
+        {{ end }}
+    </div>
+</section>
