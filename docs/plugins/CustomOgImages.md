@@ -1,7 +1,12 @@
 ---
 title: Custom OG Images
+description: Generates Open Graph social preview images.
 tags:
   - feature/emitter
+image: "[[social-image-preview-dark.png]]"
+repository: "[quartz-community/og-image](https://github.com/quartz-community/og-image)"
+enabled: true
+required: false
 ---
 
 The Custom OG Images emitter plugin generates social media preview images for your pages. It uses [satori](https://github.com/vercel/satori) to convert HTML/CSS into images, allowing you to create beautiful and consistent social media preview cards for your content.
@@ -25,33 +30,44 @@ The Custom OG Images emitter plugin generates social media preview images for yo
 
 This plugin accepts the following configuration options:
 
-```typescript title="quartz.config.ts"
-import { CustomOgImages } from "./quartz/plugins/emitters/ogImage"
+```yaml title="quartz.config.yaml"
+plugins:
+  - source: github:quartz-community/og-image
+    enabled: true
+    options:
+      colorScheme: lightMode # "lightMode" or "darkMode"
+      width: 1200
+      height: 630
+      excludeRoot: false
+```
 
-const config: QuartzConfig = {
-  plugins: {
-    emitters: [
-      CustomOgImages({
-        colorScheme: "lightMode", // what colors to use for generating image, same as theme colors from config, valid values are "darkMode" and "lightMode"
-        width: 1200, // width to generate with (in pixels)
-        height: 630, // height to generate with (in pixels)
-        excludeRoot: false, // wether to exclude "/" index path to be excluded from auto generated images (false = use auto, true = use default og image)
-        imageStructure: defaultImage, // custom image component to use
-      }),
-    ],
-  },
-}
+For the TS override approach (needed for custom `imageStructure`):
+
+```ts title="quartz.ts (override)"
+import * as ExternalPlugin from "./.quartz/plugins"
+import { defaultImage } from "./quartz/plugins/emitters/ogImage"
+
+// Must be placed before loadQuartzConfig()
+ExternalPlugin.CustomOgImages({
+  colorScheme: "lightMode",
+  width: 1200,
+  height: 630,
+  excludeRoot: false,
+  imageStructure: defaultImage,
+})
 ```
 
 ### Configuration Options
 
-| Option           | Type      | Default      | Description                                                       |
-| ---------------- | --------- | ------------ | ----------------------------------------------------------------- |
-| `colorScheme`    | string    | "lightMode"  | Theme to use for generating images ("darkMode" or "lightMode")    |
-| `width`          | number    | 1200         | Width of the generated image in pixels                            |
-| `height`         | number    | 630          | Height of the generated image in pixels                           |
-| `excludeRoot`    | boolean   | false        | Whether to exclude the root index page from auto-generated images |
-| `imageStructure` | component | defaultImage | Custom component to use for image generation                      |
+| Option               | Type      | Default                   | Description                                                       |
+| -------------------- | --------- | ------------------------- | ----------------------------------------------------------------- |
+| `colorScheme`        | string    | "lightMode"               | Theme to use for generating images ("darkMode" or "lightMode")    |
+| `width`              | number    | 1200                      | Width of the generated image in pixels                            |
+| `height`             | number    | 630                       | Height of the generated image in pixels                           |
+| `excludeRoot`        | boolean   | false                     | Whether to exclude the root index page from auto-generated images |
+| `defaultTitle`       | string    | "Untitled"                | Fallback title when a page has no title                           |
+| `defaultDescription` | string    | "No description provided" | Fallback description when a page has no description               |
+| `imageStructure`     | component | defaultImage              | Custom component to use for image generation                      |
 
 ## Frontmatter Properties
 
@@ -76,7 +92,7 @@ You can fully customize how the images being generated look by passing your own 
 
 ### Fonts
 
-You will also be passed an array containing a header and a body font (where the first entry is header and the second is body). The fonts matches the ones selected in `theme.typography.header` and `theme.typography.body` from `quartz.config.ts` and will be passed in the format required by [`satori`](https://github.com/vercel/satori). To use them in CSS, use the `.name` property (e.g. `fontFamily: fonts[1].name` to use the "body" font family).
+You will also be passed an array containing a header and a body font (where the first entry is header and the second is body). The fonts matches the ones selected in `theme.typography.header` and `theme.typography.body` from `quartz.config.yaml` and will be passed in the format required by [`satori`](https://github.com/vercel/satori). To use them in CSS, use the `.name` property (e.g. `fontFamily: fonts[1].name` to use the "body" font family).
 
 An example of a component using the header font could look like this:
 
@@ -358,3 +374,10 @@ export const og: SocialImageOptions["Component"] = (
   )
 }
 ```
+
+## API
+
+- Category: Emitter
+- Function name: `ExternalPlugin.CustomOgImages()`.
+- Source: [`quartz-community/og-image`](https://github.com/quartz-community/og-image)
+- Install: `npx quartz plugin add github:quartz-community/og-image`
