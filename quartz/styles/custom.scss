@@ -63,3 +63,42 @@ blockquote {
     background: url("/static/icon.png") center / cover;
   }
 }
+
+// wide equations scroll on their own instead of widening the page
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+@media all and ($mobile) {
+  // Quartz's mobile grid column is `auto`, so one wide child (code, math, a long word)
+  // stretches the whole column past the screen; pin it to the screen width instead
+  .page > #quartz-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  // The menu drawer only gets its `collapsed` class from JS after load, so it covers the
+  // page on first paint and then slides away. Keep it hidden until it's actually opened.
+  .explorer:not([aria-expanded="true"]) > .explorer-content {
+    visibility: hidden;
+    transform: translateX(-100vw);
+  }
+
+  // let the header row wrap so the sidebar links can drop onto their own line
+  .page > #quartz-body .sidebar.left {
+    flex-wrap: wrap;
+  }
+
+  .page-title {
+    font-size: 1.4rem;
+  }
+
+  .page-title a {
+    gap: 0.5rem;
+
+    &::before {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+}

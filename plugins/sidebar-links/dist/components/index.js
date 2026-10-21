@@ -20,6 +20,17 @@ const css = `
 .sidebar-links a.active {
   color: var(--secondary);
 }
+/* phones: the sidebar is a header row; put the links on their own row below it */
+@media (max-width: 800px) {
+  .sidebar-links {
+    order: 10;
+    flex-basis: 100%;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 0.75rem 0 0.25rem;
+  }
+}
 `
 
 export const SidebarLinks = (opts) => {
@@ -51,5 +62,11 @@ export const SidebarLinks = (opts) => {
   }
 
   Component.css = css
+  // Workaround for the explorer plugin: on a fresh visit it calls scrollIntoView() on the
+  // active post, which scrolls the whole page (down on desktop, sideways on phones). It
+  // skips that when a saved explorer scroll position exists, so seed one.
+  Component.beforeDOMLoaded = `try {
+    if (sessionStorage.getItem("explorerScrollTop") === null) sessionStorage.setItem("explorerScrollTop", "0")
+  } catch {}`
   return Component
 }
