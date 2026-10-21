@@ -1,3 +1,49 @@
 @use "./variables.scss" as *;
 
-// put your custom CSS here!
+// Flexoki accents beyond the two theme slots (secondary = cyan, tertiary = orange).
+// Light mode uses the 600 shades, dark mode the 400 shades (https://stephango.com/flexoki).
+:root {
+  --fx-red: #af3029;
+  --fx-yellow: #ad8301;
+  --fx-green: #66800b;
+  --fx-blue: #205ea6;
+  --fx-purple: #5e409d;
+  --fx-magenta: #a02f6f;
+}
+
+:root[saved-theme="dark"] {
+  --fx-red: #d14d41;
+  --fx-yellow: #d0a215;
+  --fx-green: #879a39;
+  --fx-blue: #4385be;
+  --fx-purple: #8b7ec8;
+  --fx-magenta: #ce5d97;
+}
+
+.page-title a {
+  color: var(--fx-magenta);
+}
+
+article {
+  h2 {
+    color: var(--fx-blue);
+  }
+
+  h3 {
+    color: var(--fx-purple);
+  }
+}
+
+a.internal.tag-link {
+  color: var(--fx-green);
+  background-color: color-mix(in srgb, var(--fx-green) 12%, transparent);
+}
+
+// inline code only; code blocks keep their syntax theme
+:not(pre) > code {
+  color: var(--fx-red);
+}
+
+blockquote {
+  border-left-color: var(--fx-yellow);
+}
