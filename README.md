@@ -1,17 +1,27 @@
-# Quartz v4
+# Rabjho-Rambles
 
-> “[One] who works with the door open gets all kinds of interruptions, but [they] also occasionally gets clues as to what the world is and what might be important.” — Richard Hamming
+Blog at https://0065537.xyz, built with [Quartz](https://quartz.jzhao.xyz/) from notes in my Obsidian vault.
 
-Quartz is a set of tools that helps you publish your [digital garden](https://jzhao.xyz/posts/networked-thought) and notes as a website for free.
+## Writing a post
 
-🔗 Read the documentation and get started: https://quartz.jzhao.xyz/
+1. In the vault, create a note in `Posts/` from `Templates/Post.md`.
+2. Set `publish: true` when it's ready. Only notes with `publish: true` (and the attachments they embed) ever leave the vault.
+3. `blog-tags` become the tags on the site; the vault's own `tags` are dropped when syncing.
 
-[Join the Discord Community](https://discord.gg/cRFFHYye7t)
+## Publishing
 
-## Sponsors
+```bash
+npm run sync              # copy published notes from the vault into content/
+npx quartz build --serve  # preview at http://localhost:8080
+git add content && git commit -m "Publish <post>" && git push
+```
 
-<p align="center">
-  <a href="https://github.com/sponsors/jackyzha0">
-    <img src="https://cdn.jsdelivr.net/gh/jackyzha0/jackyzha0/sponsorkit/sponsors.svg" />
-  </a>
-</p>
+Put the vault path in `.env` as `VAULT=/path/to/vault` (gitignored, so your local paths stay off GitHub), or pass it with `npm run sync -- /path/to/vault`. Each sync wipes `content/` apart from `index.md`, so don't edit files there by hand. It warns when a post links to a private note or a missing file, or contains your home directory path. `content/index.md` is the homepage and lives in this repo, not the vault.
+
+Cloudflare Pages builds the site with `npx quartz build`, output directory `public`, and `NODE_VERSION=22`.
+
+## Updating Quartz
+
+```bash
+git fetch upstream && git merge upstream/v4
+```
