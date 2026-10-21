@@ -20,7 +20,9 @@ This repo is cloned into the vault as the hidden folder `.blog/` (Obsidian ignor
 
 Site settings and plugins are in `quartz.config.yaml` (Quartz v5).
 
-Cloudflare Pages builds the site with `npx quartz plugin install && npx quartz build`, output directory `public`, and `NODE_VERSION=22`.
+The sidebar menu is a small local plugin in `plugins/sidebar-links/` (plain JS, no build step). `quartz.lock.json` is gitignored because it records absolute paths; plugins are installed from the config instead.
+
+Cloudflare Pages builds the site with `npx quartz plugin install --from-config && npx quartz build`, output directory `public`, and `NODE_VERSION=22`.
 
 ## Updating Quartz
 

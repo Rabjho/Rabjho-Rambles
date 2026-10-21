@@ -1,0 +1,42 @@
+{
+  "name": "sidebar-links",
+  "version": "1.0.0",
+  "description": "A short list of links in the sidebar (tags, RSS, GitHub)",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./components": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/components/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "peerDependencies": {
+    "preact": "^10.0.0"
+  },
+  "quartz": {
+    "name": "sidebar-links",
+    "displayName": "Sidebar Links",
+    "category": "component",
+    "version": "1.0.0",
+    "quartzVersion": ">=5.0.0",
+    "dependencies": [],
+    "defaultEnabled": true,
+    "defaultOptions": {
+      "links": {}
+    },
+    "components": {
+      "SidebarLinks": {
+        "displayName": "Sidebar Links",
+        "defaultPosition": "left",
+        "defaultPriority": 40
+      }
+    }
+  }
+}
