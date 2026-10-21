@@ -274,7 +274,6 @@ plugins:
     options:
       links:
         Tags: /tags
-        RSS: /index.xml
         GitHub: https://github.com/Rabjho
     order: 50
     layout:
