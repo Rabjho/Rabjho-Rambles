@@ -142,8 +142,8 @@ plugins:
     enabled: true
     options:
       localGraph:
-        # post -> its tags -> other posts with those tags
-        depth: 2
+        # the whole site; the current page is highlighted. Small blog, so this stays readable
+        depth: -1
     layout:
       position: right
       priority: 10

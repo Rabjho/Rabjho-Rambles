@@ -5,23 +5,26 @@
 :root {
   --fx-red: #af3029;
   --fx-yellow: #ad8301;
-  --fx-green: #66800b;
   --fx-blue: #205ea6;
   --fx-purple: #5e409d;
-  --fx-magenta: #a02f6f;
+  // tag pills: green-800 on green-100 (7.0:1 contrast)
+  --fx-tag-fg: #3d4c07;
+  --fx-tag-bg: #dde2b2;
 }
 
 :root[saved-theme="dark"] {
   --fx-red: #d14d41;
   --fx-yellow: #d0a215;
-  --fx-green: #879a39;
   --fx-blue: #4385be;
   --fx-purple: #8b7ec8;
-  --fx-magenta: #ce5d97;
+  // tag pills: green-200 on green-900 (8.1:1 contrast)
+  --fx-tag-fg: #bec97e;
+  --fx-tag-bg: #252d09;
 }
 
+// site title in the plain heading color; the logo next to it carries the color
 .page-title a {
-  color: var(--fx-magenta);
+  color: var(--dark);
 }
 
 article {
@@ -35,8 +38,8 @@ article {
 }
 
 a.internal.tag-link {
-  color: var(--fx-green);
-  background-color: color-mix(in srgb, var(--fx-green) 12%, transparent);
+  color: var(--fx-tag-fg);
+  background-color: var(--fx-tag-bg);
 }
 
 // inline code only; code blocks keep their syntax theme
