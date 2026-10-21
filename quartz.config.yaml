@@ -18,27 +18,28 @@ configuration:
       header: Schibsted Grotesk
       body: Source Sans Pro
       code: IBM Plex Mono
+    # Flexoki (https://stephango.com/flexoki): base tones, cyan accent, orange hover
     colors:
       lightMode:
-        light: "#faf8f8"
-        lightgray: "#e5e5e5"
-        gray: "#b8b8b8"
-        darkgray: "#4e4e4e"
-        dark: "#2b2b2b"
-        secondary: "#284b63"
-        tertiary: "#84a59d"
-        highlight: rgba(143, 159, 169, 0.15)
-        textHighlight: "#fff23688"
+        light: "#FFFCF0"
+        lightgray: "#E6E4D9"
+        gray: "#B7B5AC"
+        darkgray: "#403E3C"
+        dark: "#100F0F"
+        secondary: "#24837B"
+        tertiary: "#BC5215"
+        highlight: rgba(36, 131, 123, 0.1)
+        textHighlight: "#D0A21566"
       darkMode:
-        light: "#161618"
-        lightgray: "#393639"
-        gray: "#646464"
-        darkgray: "#d4d4d4"
-        dark: "#ebebec"
-        secondary: "#7b97aa"
-        tertiary: "#84a59d"
-        highlight: rgba(143, 159, 169, 0.15)
-        textHighlight: "#b3aa0288"
+        light: "#100F0F"
+        lightgray: "#282726"
+        gray: "#575653"
+        darkgray: "#CECDC3"
+        dark: "#E6E4D9"
+        secondary: "#3AA99F"
+        tertiary: "#DA702C"
+        highlight: rgba(58, 169, 159, 0.12)
+        textHighlight: "#AD830166"
 plugins:
   - source: "@quartz-community/created-modified-date"
     enabled: true
@@ -166,6 +167,7 @@ plugins:
     layout:
       position: beforeBody
       priority: 20
+      condition: not-index
   - source: "@quartz-community/tag-list"
     enabled: true
     layout:
@@ -210,8 +212,16 @@ plugins:
     layout:
       position: footer
       priority: 50
+  # filtered to posts in quartz.ts
   - source: "@quartz-community/recent-notes"
-    enabled: false
+    enabled: true
+    options:
+      title: Posts
+      limit: 1000
+    layout:
+      position: afterBody
+      priority: 20
+      condition: index
   - source: "@quartz-community/spacer"
     enabled: true
     options: {}

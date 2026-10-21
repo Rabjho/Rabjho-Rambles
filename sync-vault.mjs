@@ -14,6 +14,9 @@ const VAULT = path.resolve(process.argv[2] ?? path.join(import.meta.dirname, "..
 const CONTENT = path.resolve(import.meta.dirname, "content")
 // content/index.md is the homepage and is maintained in this repo, not the vault
 const KEEP = new Set(["index.md"])
+// posts go to the site root so they get short URLs and sit at the top of the explorer
+const FLATTEN = "Posts/"
+const target = (rel) => (rel.startsWith(FLATTEN) ? rel.slice(FLATTEN.length) : rel)
 
 function walk(dir, out = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -98,21 +101,32 @@ fs.mkdirSync(CONTENT, { recursive: true })
 for (const entry of fs.readdirSync(CONTENT)) {
   if (!KEEP.has(entry)) fs.rmSync(path.join(CONTENT, entry), { recursive: true })
 }
+const written = new Map() // content path -> vault path
 for (const rel of toCopy) {
-  if (KEEP.has(rel)) {
-    warnings.push(`${rel}: skipped, would overwrite the homepage`)
+  const out = target(rel)
+  if (KEEP.has(out)) {
+    warnings.push(`${rel}: skipped, would overwrite ${out} in this repo`)
     continue
   }
-  fs.mkdirSync(path.join(CONTENT, path.dirname(rel)), { recursive: true })
+  if (written.has(out)) {
+    warnings.push(`${rel}: skipped, ${written.get(out)} is already published as ${out}`)
+    continue
+  }
+  written.set(out, rel)
+  fs.mkdirSync(path.join(CONTENT, path.dirname(out)), { recursive: true })
   if (rel.endsWith(".md")) {
     // vault tags are a private taxonomy; the site only gets `blog-tags`
     const note = matter(fs.readFileSync(path.join(VAULT, rel), "utf8"))
     note.data.tags = note.data["blog-tags"] ?? []
     delete note.data["blog-tags"]
-    fs.writeFileSync(path.join(CONTENT, rel), matter.stringify(note.content, note.data))
+    // YAML dates parse as Date objects; write them back as YYYY-MM-DD, not full timestamps
+    for (const [key, value] of Object.entries(note.data)) {
+      if (value instanceof Date) note.data[key] = value.toISOString().slice(0, 10)
+    }
+    fs.writeFileSync(path.join(CONTENT, out), matter.stringify(note.content, note.data))
   } else {
     // write rather than copy so vault file modes (often +x) don't leak into git
-    fs.writeFileSync(path.join(CONTENT, rel), fs.readFileSync(path.join(VAULT, rel)))
+    fs.writeFileSync(path.join(CONTENT, out), fs.readFileSync(path.join(VAULT, rel)))
   }
 }
 

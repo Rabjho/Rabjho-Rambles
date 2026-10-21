@@ -2,7 +2,7 @@
 type: post
 publish: true
 title: Befuddled / Befucked
-created: 2025-11-10T00:00:00.000Z
+created: '2025-11-10'
 author:
   - Sibech
   - Rabjho

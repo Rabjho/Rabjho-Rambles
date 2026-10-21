@@ -2,7 +2,7 @@
 type: post
 publish: true
 title: Blind Cipher
-created: 2026-05-10T00:00:00.000Z
+created: '2026-05-10'
 author:
   - Rabjho
 ctf: DDC2026
