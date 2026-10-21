@@ -1,4 +1,4 @@
-# Rabjho-Rambles
+# Blog
 
 Blog at https://0065537.xyz, built with [Quartz](https://quartz.jzhao.xyz/) from notes in my Obsidian vault.
 
