@@ -12,6 +12,8 @@ tags:
   - forensics
   - author
 ---
+![[low_high_cortisol.png]]
+
 Classic crypto challenge using classic schemes but with a forensics and legacy software twist.
 
 ## LegacyDH

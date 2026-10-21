@@ -11,6 +11,8 @@ tags:
   - crypto
   - author
 ---
+![[hardchoice.png]]
+
 Post-quantum crypto challenge exploiting a subtle implementation bug in the MAYO signature scheme.
 
 ## Rotten Mayo

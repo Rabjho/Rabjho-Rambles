@@ -12,6 +12,8 @@ tags:
   - web
   - author
 ---
+![[worthless.png]]
+
 This challenge is based on the recent paper [Zero Knowledge (About) Encryption: A Comparative Security Analysis of Three Cloud-based Password Managers](https://eprint.iacr.org/2026/058), which analyses the claim that password manager providers cannot access client passwords/secrets. The paper does this by changing the threat model to one where the attacker has full control of the server.
 
 The challenge implements LastPass' key hierarchy as described in the paper and gives players root access to the server, while a bot interacts with the server at regular intervals. If you haven't solved the challenge yet, I would recommend reading the paper and giving it another go. If you have solved the challenge but haven't read the paper, I can still recommend the read (or at least a skim).
