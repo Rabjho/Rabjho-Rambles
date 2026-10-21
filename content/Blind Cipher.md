@@ -10,7 +10,7 @@ role: author
 tags:
   - crypto
   - rev
-  - author
+  - author-writeup
 ---
 This challenge is inspired by the style from early years of DDC, before AI and LLMs and while I still played in the junior category. Back then more challenges could be solved by-hand with pen and paper or knowledge of weird ciphers etc.
 

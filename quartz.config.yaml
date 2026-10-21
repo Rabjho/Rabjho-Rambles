@@ -15,9 +15,9 @@ configuration:
     fontOrigin: googleFonts
     cdnCaching: true
     typography:
-      header: Schibsted Grotesk
-      body: Source Sans Pro
-      code: IBM Plex Mono
+      header: Inter
+      body: Inter
+      code: Fira Code
     # Flexoki (https://stephango.com/flexoki): base tones, cyan accent, orange hover
     colors:
       lightMode:
@@ -191,7 +191,7 @@ plugins:
       priority: 35
       group: toolbar
   - source: "@quartz-community/breadcrumbs"
-    enabled: true
+    enabled: false
     layout:
       position: beforeBody
       priority: 5
@@ -209,6 +209,7 @@ plugins:
     options:
       links:
         GitHub: https://github.com/Rabjho
+        RSS: /index.xml
     layout:
       position: footer
       priority: 50

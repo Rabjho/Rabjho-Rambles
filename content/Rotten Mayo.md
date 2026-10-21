@@ -9,7 +9,7 @@ ctf: DDC2026
 role: author
 tags:
   - crypto
-  - author
+  - author-writeup
 ---
 ![[hardchoice.png]]
 

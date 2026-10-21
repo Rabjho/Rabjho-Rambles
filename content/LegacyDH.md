@@ -10,7 +10,7 @@ role: author
 tags:
   - crypto
   - forensics
-  - author
+  - author-writeup
 ---
 ![[low_high_cortisol.png]]
 

@@ -10,7 +10,7 @@ role: author
 tags:
   - crypto
   - web
-  - author
+  - author-writeup
 ---
 ![[worthless.png]]
 
