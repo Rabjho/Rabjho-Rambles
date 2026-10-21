@@ -2,19 +2,15 @@
 // Copies every note with `publish: true` from the Obsidian vault into content/,
 // along with the attachments those notes embed. Nothing else leaves the vault.
 //
-// Usage: npm run sync [-- /path/to/vault]
-// The vault path otherwise comes from VAULT in .env (gitignored, so it stays off GitHub).
+// This repo lives in the vault as the hidden folder .blog/, so the vault is the parent
+// directory. Usage: npm run sync [-- /path/to/vault]
 
 import fs from "node:fs"
 import os from "node:os"
 import path from "node:path"
 import matter from "gray-matter"
 
-if (!process.argv[2] && !process.env.VAULT) {
-  console.error("Set VAULT=/path/to/vault in .env, or run: npm run sync -- /path/to/vault")
-  process.exit(1)
-}
-const VAULT = path.resolve(process.argv[2] ?? process.env.VAULT)
+const VAULT = path.resolve(process.argv[2] ?? path.join(import.meta.dirname, ".."))
 const CONTENT = path.resolve(import.meta.dirname, "content")
 // content/index.md is the homepage and is maintained in this repo, not the vault
 const KEEP = new Set(["index.md"])
@@ -115,7 +111,8 @@ for (const rel of toCopy) {
     delete note.data["blog-tags"]
     fs.writeFileSync(path.join(CONTENT, rel), matter.stringify(note.content, note.data))
   } else {
-    fs.copyFileSync(path.join(VAULT, rel), path.join(CONTENT, rel))
+    // write rather than copy so vault file modes (often +x) don't leak into git
+    fs.writeFileSync(path.join(CONTENT, rel), fs.readFileSync(path.join(VAULT, rel)))
   }
 }
 

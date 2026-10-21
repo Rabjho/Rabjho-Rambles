@@ -16,7 +16,7 @@ npx quartz build --serve  # preview at http://localhost:8080
 git add content && git commit -m "Publish <post>" && git push
 ```
 
-Put the vault path in `.env` as `VAULT=/path/to/vault` (gitignored, so your local paths stay off GitHub), or pass it with `npm run sync -- /path/to/vault`. Each sync wipes `content/` apart from `index.md`, so don't edit files there by hand. It warns when a post links to a private note or a missing file, or contains your home directory path. `content/index.md` is the homepage and lives in this repo, not the vault.
+This repo is cloned into the vault as the hidden folder `.blog/` (Obsidian ignores dot-folders, and the vault's `.gitignore` excludes it), so sync reads the parent directory. Pass another vault with `npm run sync -- /path/to/vault`. Each sync wipes `content/` apart from `index.md`, so don't edit files there by hand. It warns when a post links to a private note or a missing file, or contains your home directory path. `content/index.md` is the homepage and lives in this repo, not the vault.
 
 Cloudflare Pages builds the site with `npx quartz build`, output directory `public`, and `NODE_VERSION=22`.
 
