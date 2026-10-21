@@ -18,10 +18,12 @@ git add content && git commit -m "Publish <post>" && git push
 
 This repo is cloned into the vault as the hidden folder `.blog/` (Obsidian ignores dot-folders, and the vault's `.gitignore` excludes it), so sync reads the parent directory. Pass another vault with `npm run sync -- /path/to/vault`. Each sync wipes `content/` apart from `index.md`, so don't edit files there by hand. It warns when a post links to a private note or a missing file, or contains your home directory path. `content/index.md` is the homepage and lives in this repo, not the vault.
 
-Cloudflare Pages builds the site with `npx quartz build`, output directory `public`, and `NODE_VERSION=22`.
+Site settings and plugins are in `quartz.config.yaml` (Quartz v5).
+
+Cloudflare Pages builds the site with `npx quartz plugin install && npx quartz build`, output directory `public`, and `NODE_VERSION=22`.
 
 ## Updating Quartz
 
 ```bash
-git fetch upstream && git merge upstream/v4
+npx quartz upgrade
 ```
