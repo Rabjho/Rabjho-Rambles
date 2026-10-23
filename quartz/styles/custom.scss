@@ -1,7 +1,8 @@
 @use "./variables.scss" as *;
 
-// Flexoki accents beyond the two theme slots (secondary = cyan, tertiary = orange).
-// Light mode uses the 600 shades, dark mode the 400 shades (https://stephango.com/flexoki).
+// Flexoki accents beyond the two theme slots in quartz.config.yaml (secondary = cyan,
+// tertiary = orange). Light mode uses the 600 shades, dark mode the 400 shades
+// (https://stephango.com/flexoki), except where noted for contrast.
 :root {
   --fx-red: #af3029;
   --fx-yellow: #ad8301;
@@ -13,7 +14,8 @@
 }
 
 :root[saved-theme="dark"] {
-  --fx-red: #d14d41;
+  // red-300: red-400 is only 3.4:1 on the inline code background
+  --fx-red: #e8705f;
   --fx-yellow: #d0a215;
   --fx-blue: #4385be;
   --fx-purple: #8b7ec8;
@@ -22,10 +24,7 @@
   --fx-tag-bg: #252d09;
 }
 
-// site title in the plain heading color; the logo next to it carries the color
-.page-title a {
-  color: var(--dark);
-}
+// --- Plain elements: these only depend on Markdown output, not on Quartz's markup ---
 
 article {
   h2 {
@@ -37,11 +36,6 @@ article {
   }
 }
 
-a.internal.tag-link {
-  color: var(--fx-tag-fg);
-  background-color: var(--fx-tag-bg);
-}
-
 // inline code only; code blocks keep their syntax theme
 :not(pre) > code {
   color: var(--fx-red);
@@ -51,11 +45,20 @@ blockquote {
   border-left-color: var(--fx-yellow);
 }
 
-// logo in a circle before the site title (quartz/static/icon.png)
+// --- Quartz component classes: check these after an upgrade ---
+
+a.internal.tag-link {
+  color: var(--fx-tag-fg);
+  background-color: var(--fx-tag-bg);
+}
+
+// site title in the plain heading color, with the logo in a circle before it
+// (quartz/static/icon.png); the logo carries the color
 .page-title a {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  color: var(--dark);
 
   &::before {
     content: "";
@@ -67,13 +70,24 @@ blockquote {
   }
 }
 
-// wide equations scroll on their own instead of widening the page
-.katex-display {
-  overflow-x: auto;
-  overflow-y: hidden;
-}
-
 @media all and ($mobile) {
+  .page-title {
+    font-size: 1.4rem;
+  }
+
+  .page-title a {
+    gap: 0.5rem;
+
+    &::before {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+
+  // --- Quartz v5.0.0 layout workarounds: these reach into Quartz's page grid and
+  // explorer internals. After an upgrade, delete each one and check a phone-width page;
+  // keep it only if the bug is back.
+
   // Quartz's mobile grid column is `auto`, so one wide child (code, math, a long word)
   // stretches the whole column past the screen; pin it to the screen width instead
   .page > #quartz-body {
@@ -90,18 +104,5 @@ blockquote {
   // let the header row wrap so the sidebar links can drop onto their own line
   .page > #quartz-body .sidebar.left {
     flex-wrap: wrap;
-  }
-
-  .page-title {
-    font-size: 1.4rem;
-  }
-
-  .page-title a {
-    gap: 0.5rem;
-
-    &::before {
-      width: 2rem;
-      height: 2rem;
-    }
   }
 }
